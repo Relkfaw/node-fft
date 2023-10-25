@@ -52,7 +52,21 @@ module.exports = {
     for (var k = 0; k < N / 2; k++) {
       // t is a complex number!
       var t = X_evens[k],
-          e = complex.multiply(fftUtil.exponent(k, N), X_odds[k]);
+          e;
+
+      // Check if X_odds[k] is defined. If not, consider it as [0, 0]
+      if (X_odds[k] === undefined) {
+        e = [0, 0];
+      } else {
+        e = complex.multiply(fftUtil.exponent(k, N), X_odds[k]);
+      }
+
+      // Check if X_evens[k] is defined. If not, consider it as [0, 0]
+      if (X_evens[k] === undefined) {
+        t = [0, 0];
+      } else {
+        t = X_evens[k];
+      }
 
       X[k] = complex.add(t, e);
       X[k + (N / 2)] = complex.subtract(t, e);
